@@ -1,7 +1,7 @@
 ######################## default configuration ####################
-baseURL = "https://examplesite.com"
+baseURL = "https://antoniofagardo.github.io/philiwood"
 languageCode = "en"
-title = "Hargo | Hugo Ecommerce Site"
+title = "PhiliWood | Hugo Ecommerce Site"
 theme = "hargo"
 summaryLength = "50"
 paginate = 10
