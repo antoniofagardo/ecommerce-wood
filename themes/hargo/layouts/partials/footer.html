@@ -33,7 +33,7 @@
       </div>
       <div class="col-lg-4 col-md-5">
         <h5 class="font-weight-medium mb-4">Contact us</h5>
-        <form action="{{ site.Params.contact.formAction }}" method="POST" class="contact1-form">
+        <form action="/" method="POST" class="contact1-form">
           <input type="text" class="form-control mb-2" id="name" name="name" placeholder="Your Name">
           <input type="email" class="form-control mb-2" id="email" name="email" placeholder="Your Email">
           <textarea name="message" id="message" class="form-control mb-2" placeholder="Your Message"></textarea>
@@ -48,6 +48,34 @@
     </div>
   </div>
 </footer>
+
+<script>
+$('.contact1-form').on('submit',function(e){
+  //optional validation code here
+  console.log("Stopping event propagation");
+  e.preventDefault();
+  console.log("Sending ajax request");
+  $.ajax({
+      url: "{{ site.Params.contact.formAction }}",
+      method: "POST",
+      dataType: "json",
+      data: $(".contact1-form").serialize(),
+      success: function(response) {
+          if(response.result == "success") {
+              $('.contact1-form')[0].reset();
+              alert('Thank you for contacting us.');
+              return true;
+          }
+          else {
+              alert("Something went wrong. Please try again.")
+          }
+      },
+      error: function() {
+          alert("Something went wrong. Please try again.")
+      }
+  })
+});
+</script>
 
 {{ with site.Params.snipcartApiKey }}
 {{ "<!-- Snipcart -->" | safeHTML }}
@@ -81,34 +109,6 @@
 })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 ga('create', '{{ . }}', 'auto');
 ga('send', 'pageview');
-
-$('.contact1-form').on('submit',function(e){
-        //optional validation code here
-  
-        e.preventDefault();
-      
-        $.ajax({
-            url: "{{ site.Params.contact.formAction }}",
-            method: "POST",
-            dataType: "json",
-            data: $(".contact1-form").serialize(),
-            success: function(response) {
-                
-                if(response.result == "success") {
-                    $('.contact1-form')[0].reset();
-                    alert('Thank you for contacting us.');
-                    return true;
-                }
-                else {
-                    alert("Something went wrong. Please try again.")
-                }
-            },
-            error: function() {
-                
-                alert("Something went wrong. Please try again.")
-            }
-        })
-    });
 </script>
 {{ end }}
 
