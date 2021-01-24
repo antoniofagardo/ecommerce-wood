@@ -49,34 +49,6 @@
   </div>
 </footer>
 
-<script>
-$('.contact1-form').on('submit',function(e){
-  //optional validation code here
-  console.log("Stopping event propagation");
-  e.preventDefault();
-  console.log("Sending ajax request");
-  $.ajax({
-      url: "{{ site.Params.contact.formAction }}",
-      method: "POST",
-      dataType: "json",
-      data: $(".contact1-form").serialize(),
-      success: function(response) {
-          if(response.result == "success") {
-              $('.contact1-form')[0].reset();
-              alert('Thank you for contacting us.');
-              return true;
-          }
-          else {
-              alert("Something went wrong. Please try again.")
-          }
-      },
-      error: function() {
-          alert("Something went wrong. Please try again.")
-      }
-  })
-});
-</script>
-
 {{ with site.Params.snipcartApiKey }}
 {{ "<!-- Snipcart -->" | safeHTML }}
 <div id="snipcart" data-api-key="{{ . }}" hidden></div>
@@ -92,6 +64,35 @@ $('.contact1-form').on('submit',function(e){
 {{ "<!-- Main Script -->" | safeHTML }}
 {{ $script := resources.Get "js/script.js" | minify}}
 <script src="{{ $script.Permalink }}"></script>
+
+{{ "<!-- Contact form Script -->" | safeHTML }}
+<script>
+  $('.contact1-form').on('submit',function(e){
+    //optional validation code here
+    console.log("Stopping event propagation");
+    e.preventDefault();
+    console.log("Sending ajax request");
+    $.ajax({
+        url: "{{ site.Params.contact.formAction }}",
+        method: "POST",
+        dataType: "json",
+        data: $(".contact1-form").serialize(),
+        success: function(response) {
+            if(response.result == "success") {
+                $('.contact1-form')[0].reset();
+                alert('Thank you for contacting us.');
+                return true;
+            }
+            else {
+                alert("Something went wrong. Please try again.")
+            }
+        },
+        error: function() {
+            alert("Something went wrong. Please try again.")
+        }
+    })
+  });
+</script>
 
 {{ with site.Params.googleAnalitycsID }}
 {{ "<!-- Google Analytics -->" | safeHTML }}
