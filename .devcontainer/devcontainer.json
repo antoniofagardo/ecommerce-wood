@@ -1,31 +1,42 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.154.2/containers/alpine
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.163.0/containers/hugo
 {
-	"name": "Alpine",
+	"name": "Hugo (Community)",
 	"build": {
 		"dockerfile": "Dockerfile",
-		// Update 'VARIANT' to pick an Alpine version: 3.10, 3.11, 3.12
-		"args": { "VARIANT": "3.12", "HUGO_VERSION": "0.80.0" }
+		"args": {
+			// Update VARIANT to pick hugo variant.
+			// Example variants: hugo, hugo_extended
+			// Rebuild the container if it already exists to update.
+			"VARIANT": "hugo_extended",
+			// Update VERSION to pick a specific hugo version.
+			// Example versions: latest, 0.73.0, 0,71.1
+			// Rebuild the container if it already exists to update.
+			"VERSION": "latest",
+			// Update NODE_VERSION to pick the Node.js version: 12, 14
+			"NODE_VERSION": "14",
+		}
 	},
-	
-	// Set *default* container specific settings.json values on container create. 
+
+	// Set *default* container specific settings.json values on container create.
 	"settings": {
-		"terminal.integrated.shell.linux": "/bin/ash"
+		"terminal.integrated.shell.linux": "/bin/zsh"
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
-	// Note that some extensions may not work in Alpine Linux. See https://aka.ms/vscode-remote/linux.
-	"extensions": [],
+	"extensions": [
+		"bungcip.better-toml",
+		"davidanson.vscode-markdownlint"
+	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [1313],
+	"forwardPorts": [
+		1313
+	],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "uname -a",
 
-	// Uncomment when using a ptrace-based debugger like C++, Go, and Rust
-	// "runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
-
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	"remoteUser": "node"
 }
